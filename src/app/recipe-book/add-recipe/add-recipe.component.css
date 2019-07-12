@@ -1,0 +1,39 @@
+.form{
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.full-width{
+    width: 100%;
+}
+
+.ingredient{
+    width: 33%;
+    display: inline-block;
+    padding-right: 10px;
+}
+
+.measurement{
+    width: 20%;
+    display: inline-block;
+}
+
+#ingredient-container{
+    display: flex;
+}
+
+#add-recipe-container{
+    overflow: visible;
+}
+
+#submit-recipe-button{
+    float: right;
+
+}
+
+#submit-button-container{
+    width: 100%;
+    overflow: auto;
+    padding-bottom: 1em;
+}

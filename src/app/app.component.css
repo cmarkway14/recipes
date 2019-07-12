@@ -1,0 +1,36 @@
+#header{
+    width: 100%;
+    height: 75px;
+    padding: 25px;
+    background: slategray;
+    display: flex;
+}
+
+#footer{
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    background: slategray;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+}
+
+.inline{
+    display: inline-block;
+}
+
+.user{
+    margin-right: 3em;
+}
+
+.mat-raised-button{
+    min-width: 145px !important;
+    height: 45px !important;
+}
+
+#signout {
+    min-width: 0px !important;
+    float: right;
+    margin-top: .25em;
+}
