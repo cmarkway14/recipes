@@ -1,0 +1,26 @@
+<div id="recipe-wrapper">
+  <div>
+    <button (click)="AddRecipe()">Add</button>
+  </div>
+  <div class="recipe-container">
+    <div *ngFor="let recipe of recipes" class="recipe">
+      <mat-card class="recipe-card">
+        <mat-card-header>
+          <img mat-card-avatar class="header-image" src="{{recipe.image}}" alt="Photo of a Shiba Inu">
+          {{recipe.name}}
+        </mat-card-header>
+
+        <mat-card-content>
+          <p>Cook time (In minutes): {{recipe.cookTime}}</p>
+          <br>
+        </mat-card-content>
+
+        <mat-card-actions align="center">
+          <button mat-button class="recipe-details">Details</button>
+          <!-- <span class="spacer"></span>
+          <button mat-button>Select Workout</button> -->
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

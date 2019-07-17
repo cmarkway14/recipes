@@ -1,0 +1,89 @@
+<div mat-dialog-content id="add-recipe-container">
+    <form (ngSubmit)="onSubmit($event)">
+        <div id="submit-button-container">
+            <button type="submit" id="submit-recipe-button" mat-raised-button color="primary">Submit</button>
+        </div>
+        <mat-accordion>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Recipe Name
+                </mat-expansion-panel-header>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Recipe Name" [(ngModel)]="recipe.name" name="RecipeName">
+                </mat-form-field>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Cook Time
+                </mat-expansion-panel-header>
+                <mat-form-field class="full-width">
+                    <input type="number" matInput placeholder="Cook Time (In Minutes)" [(ngModel)]="recipe.cookTime"
+                        name="RecipeCookTime">
+                </mat-form-field>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Servings
+                </mat-expansion-panel-header>
+                <mat-form-field class="full-width">
+                    <input type="number" matInput placeholder="Number of servings for recipe" [(ngModel)]="recipe.servings" name="recipeServings">
+                </mat-form-field>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Directions
+                </mat-expansion-panel-header>
+                <div>
+                    <div *ngFor="let step of counterArr">
+                        <p>Step {{step}}</p>
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Directions" [(ngModel)]="recipe.directions[step - 1]"
+                                name="RecipeDirections{{step - 1}}">
+                        </mat-form-field>
+                        <button type="button" mat-icon-button color="black" (click)="AddDirectionStep()">
+                            <mat-icon>
+                                add
+                            </mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Ingredients
+                </mat-expansion-panel-header>
+                <div *ngFor="let ingred of ingredientArr" id="ingredient-container">
+                    <mat-form-field class="ingredient">
+                        <input matInput placeholder="Ingredient" [(ngModel)]="recipe.ingredients[ingred].name"
+                            name="RecipeIngredientName{{ingred}}">
+                    </mat-form-field>
+                    <mat-form-field class="ingredient">
+                        <input matInput type="number" placeholder="Amount"
+                            [(ngModel)]="recipe.ingredients[ingred].amount" name="RecipeIngredientAmount{{ingred}}">
+                    </mat-form-field>
+                    <mat-form-field class="measurement">
+                        <mat-label>Measurement</mat-label>
+                        <mat-select [(ngModel)]="recipe.ingredients[ingred].measurement"
+                            name="RecipeIngredientMeasurement{{ingred}}">
+                            <mat-option *ngFor="let measurement of measurements" [value]="measurement">
+                                {{measurement}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <span class="spacer"></span>
+                    <button type="button" mat-icon-button color="black" (click)="AddIngredient()">
+                        <mat-icon>
+                            add
+                        </mat-icon>
+                    </button>
+                </div>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+    </form>
+</div>
