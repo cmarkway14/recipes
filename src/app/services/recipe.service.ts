@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Recipe } from '../Models/Recipe';
+import { FireStoreIngredient } from '../Models/FireStoreIngredient';
 
 @Injectable({
   providedIn: 'root'
@@ -72,15 +73,5 @@ export class RecipeService {
       .catch(function (error) {
         console.error("Error writing document: ", error);
       });
-  }
-}
-
-class FireStoreIngredient {
-  key: string;
-  value: string;
-
-  constructor(key: string, value: string){
-    this.key = key;
-    this.value = value;
   }
 }

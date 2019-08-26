@@ -1,7 +1,10 @@
 <div mat-dialog-content id="add-recipe-container">
-    <form (ngSubmit)="onSubmit($event)">
+    <form #recipeForm='ngForm' (ngSubmit)="onSubmit($event)">
+
+        {{recipeForm.form.valid}}
         <div id="submit-button-container">
-            <button type="submit" id="submit-recipe-button" mat-raised-button color="primary">Submit</button>
+            <button [disabled]="recipeForm.form.invalid" type="submit" id="submit-recipe-button" mat-raised-button
+                color="primary">Submit</button>
         </div>
         <mat-accordion>
 
@@ -20,7 +23,7 @@
                 </mat-expansion-panel-header>
                 <mat-form-field class="full-width">
                     <input type="number" matInput placeholder="Cook Time (In Minutes)" [(ngModel)]="recipe.cookTime"
-                        name="RecipeCookTime">
+                        name="RecipeCookTime" required>
                 </mat-form-field>
             </mat-expansion-panel>
 
@@ -29,7 +32,8 @@
                     Servings
                 </mat-expansion-panel-header>
                 <mat-form-field class="full-width">
-                    <input type="number" matInput placeholder="Number of servings for recipe" [(ngModel)]="recipe.servings" name="recipeServings">
+                    <input type="number" matInput placeholder="Number of servings for recipe"
+                        [(ngModel)]="recipe.servings" name="recipeServings" required>
                 </mat-form-field>
             </mat-expansion-panel>
 
@@ -38,15 +42,22 @@
                     Directions
                 </mat-expansion-panel-header>
                 <div>
-                    <div *ngFor="let step of counterArr">
+                    <div *ngFor="let step of directionsArr" id="directions-container">
                         <p>Step {{step}}</p>
                         <mat-form-field class="full-width">
                             <input matInput placeholder="Directions" [(ngModel)]="recipe.directions[step - 1]"
-                                name="RecipeDirections{{step - 1}}">
+                                name="RecipeDirections{{step - 1}}" required>
                         </mat-form-field>
-                        <button type="button" mat-icon-button color="black" (click)="AddDirectionStep()">
+                        <button *ngIf="step === directionsArr.length" type="button" mat-icon-button color="black"
+                            (click)="AddDirectionStep()">
                             <mat-icon>
                                 add
+                            </mat-icon>
+                        </button>
+                        <button *ngIf="step !== directionsArr.length && step !== 1" type="button" mat-icon-button
+                            color="black" (click)="RemoveDirectionStep()">
+                            <mat-icon>
+                                remove
                             </mat-icon>
                         </button>
                     </div>
@@ -60,25 +71,34 @@
                 <div *ngFor="let ingred of ingredientArr" id="ingredient-container">
                     <mat-form-field class="ingredient">
                         <input matInput placeholder="Ingredient" [(ngModel)]="recipe.ingredients[ingred].name"
-                            name="RecipeIngredientName{{ingred}}">
+                            name="RecipeIngredientName{{ingred}}" required>
                     </mat-form-field>
                     <mat-form-field class="ingredient">
                         <input matInput type="number" placeholder="Amount"
-                            [(ngModel)]="recipe.ingredients[ingred].amount" name="RecipeIngredientAmount{{ingred}}">
+                            [(ngModel)]="recipe.ingredients[ingred].amount" name="RecipeIngredientAmount{{ingred}}"
+                            required>
                     </mat-form-field>
                     <mat-form-field class="measurement">
                         <mat-label>Measurement</mat-label>
                         <mat-select [(ngModel)]="recipe.ingredients[ingred].measurement"
-                            name="RecipeIngredientMeasurement{{ingred}}">
-                            <mat-option *ngFor="let measurement of measurements" [value]="measurement">
+                            name="RecipeIngredientMeasurement{{ingred}}" required>
+                            <mat-option *ngFor="let measurement of measurements" [value]="measurement" required>
                                 {{measurement}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <span class="spacer"></span>
-                    <button type="button" mat-icon-button color="black" (click)="AddIngredient()">
+                    <button *ngIf="ingred === ingredientArr.length - 1" type="button" mat-icon-button color="black"
+                        (click)="AddIngredient()">
                         <mat-icon>
                             add
+                        </mat-icon>
+                    </button>
+
+                    <button *ngIf="ingred !== ingredientArr.length - 1" type="button" mat-icon-button color="black"
+                        (click)="RemoveIngredient(ingred)">
+                        <mat-icon>
+                            remove
                         </mat-icon>
                     </button>
                 </div>

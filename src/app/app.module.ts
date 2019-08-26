@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule, MatCard } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { RecipesComponent } from './recipe-book/recipes/recipes.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,8 @@ import { FormsModule } from '@angular/forms';
     MatIconModule,
     MatExpansionModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
