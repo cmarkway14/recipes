@@ -37,3 +37,7 @@
     overflow: auto;
     padding-bottom: 1em;
 }
+
+#directions-container{
+    display: flex;
+}

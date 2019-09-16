@@ -41,7 +41,7 @@ module.exports = "<div id=\"header\">\n  <span>Recipes</span>\n  <span class=\"s
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div mat-dialog-content id=\"add-recipe-container\">\n    <form (ngSubmit)=\"onSubmit($event)\">\n        <div id=\"submit-button-container\">\n            <button type=\"submit\" id=\"submit-recipe-button\" mat-raised-button color=\"primary\">Submit</button>\n        </div>\n        <mat-accordion>\n\n            <mat-expansion-panel>\n                <mat-expansion-panel-header>\n                    Recipe Name\n                </mat-expansion-panel-header>\n                <mat-form-field class=\"full-width\">\n                    <input matInput placeholder=\"Recipe Name\" [(ngModel)]=\"recipe.name\" name=\"RecipeName\">\n                </mat-form-field>\n            </mat-expansion-panel>\n\n            <mat-expansion-panel>\n                <mat-expansion-panel-header>\n                    Cook Time\n                </mat-expansion-panel-header>\n                <mat-form-field class=\"full-width\">\n                    <input type=\"number\" matInput placeholder=\"Cook Time (In Minutes)\" [(ngModel)]=\"recipe.cookTime\"\n                        name=\"RecipeCookTime\">\n                </mat-form-field>\n            </mat-expansion-panel>\n\n            <mat-expansion-panel>\n                <mat-expansion-panel-header>\n                    Servings\n                </mat-expansion-panel-header>\n                <mat-form-field class=\"full-width\">\n                    <input type=\"number\" matInput placeholder=\"Number of servings for recipe\" [(ngModel)]=\"recipe.servings\" name=\"recipeServings\">\n                </mat-form-field>\n            </mat-expansion-panel>\n\n            <mat-expansion-panel>\n                <mat-expansion-panel-header>\n                    Directions\n                </mat-expansion-panel-header>\n                <div>\n                    <div *ngFor=\"let step of counterArr\">\n                        <p>Step {{step}}</p>\n                        <mat-form-field class=\"full-width\">\n                            <input matInput placeholder=\"Directions\" [(ngModel)]=\"recipe.directions[step - 1]\"\n                                name=\"RecipeDirections{{step - 1}}\">\n                        </mat-form-field>\n                        <button type=\"button\" mat-icon-button color=\"black\" (click)=\"AddDirectionStep()\">\n                            <mat-icon>\n                                add\n                            </mat-icon>\n                        </button>\n                    </div>\n                </div>\n            </mat-expansion-panel>\n\n            <mat-expansion-panel>\n                <mat-expansion-panel-header>\n                    Ingredients\n                </mat-expansion-panel-header>\n                <div *ngFor=\"let ingred of ingredientArr\" id=\"ingredient-container\">\n                    <mat-form-field class=\"ingredient\">\n                        <input matInput placeholder=\"Ingredient\" [(ngModel)]=\"recipe.ingredients[ingred].name\"\n                            name=\"RecipeIngredientName{{ingred}}\">\n                    </mat-form-field>\n                    <mat-form-field class=\"ingredient\">\n                        <input matInput type=\"number\" placeholder=\"Amount\"\n                            [(ngModel)]=\"recipe.ingredients[ingred].amount\" name=\"RecipeIngredientAmount{{ingred}}\">\n                    </mat-form-field>\n                    <mat-form-field class=\"measurement\">\n                        <mat-label>Measurement</mat-label>\n                        <mat-select [(ngModel)]=\"recipe.ingredients[ingred].measurement\"\n                            name=\"RecipeIngredientMeasurement{{ingred}}\">\n                            <mat-option *ngFor=\"let measurement of measurements\" [value]=\"measurement\">\n                                {{measurement}}\n                            </mat-option>\n                        </mat-select>\n                    </mat-form-field>\n                    <span class=\"spacer\"></span>\n                    <button type=\"button\" mat-icon-button color=\"black\" (click)=\"AddIngredient()\">\n                        <mat-icon>\n                            add\n                        </mat-icon>\n                    </button>\n                </div>\n            </mat-expansion-panel>\n\n        </mat-accordion>\n    </form>\n</div>"
+module.exports = "<div mat-dialog-content id=\"add-recipe-container\">\n    <form #recipeForm='ngForm' (ngSubmit)=\"onSubmit($event)\">\n\n        {{recipeForm.form.valid}}\n        <div id=\"submit-button-container\">\n            <button [disabled]=\"recipeForm.form.invalid\" type=\"submit\" id=\"submit-recipe-button\" mat-raised-button\n                color=\"primary\">Submit</button>\n        </div>\n        <mat-accordion>\n\n            <mat-expansion-panel>\n                <mat-expansion-panel-header>\n                    Recipe Name\n                </mat-expansion-panel-header>\n                <mat-form-field class=\"full-width\">\n                    <input matInput placeholder=\"Recipe Name\" [(ngModel)]=\"recipe.name\" name=\"RecipeName\">\n                </mat-form-field>\n            </mat-expansion-panel>\n\n            <mat-expansion-panel>\n                <mat-expansion-panel-header>\n                    Cook Time\n                </mat-expansion-panel-header>\n                <mat-form-field class=\"full-width\">\n                    <input type=\"number\" matInput placeholder=\"Cook Time (In Minutes)\" [(ngModel)]=\"recipe.cookTime\"\n                        name=\"RecipeCookTime\" required>\n                </mat-form-field>\n            </mat-expansion-panel>\n\n            <mat-expansion-panel>\n                <mat-expansion-panel-header>\n                    Servings\n                </mat-expansion-panel-header>\n                <mat-form-field class=\"full-width\">\n                    <input type=\"number\" matInput placeholder=\"Number of servings for recipe\"\n                        [(ngModel)]=\"recipe.servings\" name=\"recipeServings\" required>\n                </mat-form-field>\n            </mat-expansion-panel>\n\n            <mat-expansion-panel>\n                <mat-expansion-panel-header>\n                    Directions\n                </mat-expansion-panel-header>\n                <div>\n                    <div *ngFor=\"let step of directionsArr\" id=\"directions-container\">\n                        <p>Step {{step}}</p>\n                        <mat-form-field class=\"full-width\">\n                            <input matInput placeholder=\"Directions\" [(ngModel)]=\"recipe.directions[step - 1]\"\n                                name=\"RecipeDirections{{step - 1}}\" required>\n                        </mat-form-field>\n                        <button *ngIf=\"step === directionsArr.length\" type=\"button\" mat-icon-button color=\"black\"\n                            (click)=\"AddDirectionStep()\">\n                            <mat-icon>\n                                add\n                            </mat-icon>\n                        </button>\n                        <button *ngIf=\"step !== directionsArr.length && step !== 1\" type=\"button\" mat-icon-button\n                            color=\"black\" (click)=\"RemoveDirectionStep()\">\n                            <mat-icon>\n                                remove\n                            </mat-icon>\n                        </button>\n                    </div>\n                </div>\n            </mat-expansion-panel>\n\n            <mat-expansion-panel>\n                <mat-expansion-panel-header>\n                    Ingredients\n                </mat-expansion-panel-header>\n                <div *ngFor=\"let ingred of ingredientArr\" id=\"ingredient-container\">\n                    <mat-form-field class=\"ingredient\">\n                        <input matInput placeholder=\"Ingredient\" [(ngModel)]=\"recipe.ingredients[ingred].name\"\n                            name=\"RecipeIngredientName{{ingred}}\" required>\n                    </mat-form-field>\n                    <mat-form-field class=\"ingredient\">\n                        <input matInput type=\"number\" placeholder=\"Amount\"\n                            [(ngModel)]=\"recipe.ingredients[ingred].amount\" name=\"RecipeIngredientAmount{{ingred}}\"\n                            required>\n                    </mat-form-field>\n                    <mat-form-field class=\"measurement\">\n                        <mat-label>Measurement</mat-label>\n                        <mat-select [(ngModel)]=\"recipe.ingredients[ingred].measurement\"\n                            name=\"RecipeIngredientMeasurement{{ingred}}\" required>\n                            <mat-option *ngFor=\"let measurement of measurements\" [value]=\"measurement\" required>\n                                {{measurement}}\n                            </mat-option>\n                        </mat-select>\n                    </mat-form-field>\n                    <span class=\"spacer\"></span>\n                    <button *ngIf=\"ingred === ingredientArr.length - 1\" type=\"button\" mat-icon-button color=\"black\"\n                        (click)=\"AddIngredient()\">\n                        <mat-icon>\n                            add\n                        </mat-icon>\n                    </button>\n\n                    <button *ngIf=\"ingred !== ingredientArr.length - 1\" type=\"button\" mat-icon-button color=\"black\"\n                        (click)=\"RemoveIngredient(ingred)\">\n                        <mat-icon>\n                            remove\n                        </mat-icon>\n                    </button>\n                </div>\n            </mat-expansion-panel>\n\n        </mat-accordion>\n    </form>\n</div>"
 
 /***/ }),
 
@@ -52,7 +52,7 @@ module.exports = "<div mat-dialog-content id=\"add-recipe-container\">\n    <for
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"recipe-wrapper\">\n  <div>\n    <button (click)=\"AddRecipe()\">Add</button>\n  </div>\n    <div *ngFor=\"let recipe of recipes\" class=\"recipe-container\">\n      <mat-card>\n        <mat-card-header>\n          <img mat-card-avatar class=\"header-image\" src=\"{{recipe.image}}\" alt=\"Photo of a Shiba Inu\">\n          {{recipe.name}}\n        </mat-card-header>\n  \n        <mat-card-content>\n          <p>Cook time (In minutes): {{recipe.cookTime}}</p>\n          <br>\n        </mat-card-content>\n  \n        <mat-card-actions>\n          <button mat-button>Details</button>\n          <span class=\"spacer\"></span>\n          <button mat-button>Select Workout</button>\n        </mat-card-actions>\n      </mat-card>\n    </div>\n  </div>"
+module.exports = "<div id=\"recipe-wrapper\">\n  <!-- <div>\n    <button (click)=\"AddRecipe()\">Add</button>\n  </div> -->\n  <div class=\"recipe-container\">\n    <div *ngFor=\"let recipe of recipes\" class=\"recipe\">\n      <mat-card class=\"recipe-card\">\n        <mat-card-header>\n          <img mat-card-avatar class=\"header-image\" src=\"{{recipe.image}}\" alt=\"Photo of a Shiba Inu\">\n          {{recipe.name}}\n        </mat-card-header>\n\n        <mat-card-content>\n          <p>Cook time (In minutes): {{recipe.cookTime}}</p>\n          <br>\n        </mat-card-content>\n\n        <mat-card-actions align=\"center\">\n          <button mat-button class=\"recipe-details\">Details</button>\n          <!-- <span class=\"spacer\"></span>\n          <button mat-button>Select Workout</button> -->\n        </mat-card-actions>\n      </mat-card>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -143,6 +143,52 @@ class Recipe {
         this.directions = [];
     }
 }
+
+
+/***/ }),
+
+/***/ "./src/app/angular.materials.ts":
+/*!**************************************!*\
+  !*** ./src/app/angular.materials.ts ***!
+  \**************************************/
+/*! exports provided: materials */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "materials", function() { return materials; });
+/* harmony import */ var _angular_material_icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/material/icon */ "./node_modules/@angular/material/esm2015/icon.js");
+/* harmony import */ var _angular_material_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material/select */ "./node_modules/@angular/material/esm2015/select.js");
+/* harmony import */ var _angular_material_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/card */ "./node_modules/@angular/material/esm2015/card.js");
+/* harmony import */ var _angular_material_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material/button */ "./node_modules/@angular/material/esm2015/button.js");
+/* harmony import */ var _angular_material_radio__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material/radio */ "./node_modules/@angular/material/esm2015/radio.js");
+/* harmony import */ var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material/form-field */ "./node_modules/@angular/material/esm2015/form-field.js");
+/* harmony import */ var _angular_material_input__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material/input */ "./node_modules/@angular/material/esm2015/input.js");
+/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm2015/dialog.js");
+/* harmony import */ var _angular_material_expansion__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/material/expansion */ "./node_modules/@angular/material/esm2015/expansion.js");
+/* harmony import */ var _angular_material_chips__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/material/chips */ "./node_modules/@angular/material/esm2015/chips.js");
+
+
+
+
+
+
+
+
+
+
+const materials = [
+    _angular_material_button__WEBPACK_IMPORTED_MODULE_3__["MatButtonModule"],
+    _angular_material_radio__WEBPACK_IMPORTED_MODULE_4__["MatRadioModule"],
+    _angular_material_form_field__WEBPACK_IMPORTED_MODULE_5__["MatFormFieldModule"],
+    _angular_material_input__WEBPACK_IMPORTED_MODULE_6__["MatInputModule"],
+    _angular_material_dialog__WEBPACK_IMPORTED_MODULE_7__["MatDialogModule"],
+    _angular_material_card__WEBPACK_IMPORTED_MODULE_2__["MatCardModule"],
+    _angular_material_expansion__WEBPACK_IMPORTED_MODULE_8__["MatExpansionModule"],
+    _angular_material_icon__WEBPACK_IMPORTED_MODULE_0__["MatIconModule"],
+    _angular_material_select__WEBPACK_IMPORTED_MODULE_1__["MatSelectModule"],
+    _angular_material_chips__WEBPACK_IMPORTED_MODULE_9__["MatChipsModule"]
+];
 
 
 /***/ }),
@@ -243,30 +289,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _recipe_book_add_recipe_add_recipe_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./recipe-book/add-recipe/add-recipe.component */ "./src/app/recipe-book/add-recipe/add-recipe.component.ts");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_fire__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/fire */ "./node_modules/@angular/fire/es2015/index.js");
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/es2015/index.js");
-/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/fire/storage */ "./node_modules/@angular/fire/storage/es2015/index.js");
-/* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/fire/auth */ "./node_modules/@angular/fire/auth/es2015/index.js");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm2015/animations.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
-/* harmony import */ var _angular_material_select__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/select */ "./node_modules/@angular/material/esm2015/select.js");
-/* harmony import */ var _angular_material_icon__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/icon */ "./node_modules/@angular/material/esm2015/icon.js");
-/* harmony import */ var _angular_material_card__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/card */ "./node_modules/@angular/material/esm2015/card.js");
-/* harmony import */ var _angular_material_expansion__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/material/expansion */ "./node_modules/@angular/material/esm2015/expansion.js");
-/* harmony import */ var _recipe_book_recipes_recipes_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./recipe-book/recipes/recipes.component */ "./src/app/recipe-book/recipes/recipes.component.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-
-
-
-
-
-
-
-
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm2015/animations.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var _recipe_book_recipes_recipes_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./recipe-book/recipes/recipes.component */ "./src/app/recipe-book/recipes/recipes.component.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _angular_materials__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./angular.materials */ "./src/app/angular.materials.ts");
+/* harmony import */ var _firestore_imports__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./firestore.imports */ "./src/app/firestore.imports.ts");
 
 
 
@@ -284,37 +314,57 @@ let AppModule = class AppModule {
 AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["NgModule"])({
         declarations: [
-            _app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"],
-            _recipe_book_recipes_recipes_component__WEBPACK_IMPORTED_MODULE_18__["RecipesComponent"],
+            _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"],
+            _recipe_book_recipes_recipes_component__WEBPACK_IMPORTED_MODULE_8__["RecipesComponent"],
             _recipe_book_add_recipe_add_recipe_component__WEBPACK_IMPORTED_MODULE_1__["AddRecipeComponent"]
         ],
         entryComponents: [_recipe_book_add_recipe_add_recipe_component__WEBPACK_IMPORTED_MODULE_1__["AddRecipeComponent"]],
         imports: [
-            _angular_fire__WEBPACK_IMPORTED_MODULE_4__["AngularFireModule"].initializeApp(src_environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].firebaseConfig),
+            ..._firestore_imports__WEBPACK_IMPORTED_MODULE_11__["firestoreImports"],
+            ..._angular_materials__WEBPACK_IMPORTED_MODULE_10__["materials"],
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
-            _app_routing_module__WEBPACK_IMPORTED_MODULE_8__["AppRoutingModule"],
-            _angular_fire__WEBPACK_IMPORTED_MODULE_4__["AngularFireModule"],
-            _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_5__["AngularFirestoreModule"],
-            _angular_fire_storage__WEBPACK_IMPORTED_MODULE_6__["AngularFireStorageModule"],
-            _angular_fire_auth__WEBPACK_IMPORTED_MODULE_7__["AngularFireAuthModule"],
-            _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_11__["BrowserAnimationsModule"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_13__["MatButtonModule"],
-            _angular_material_card__WEBPACK_IMPORTED_MODULE_16__["MatCardModule"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_13__["MatRadioModule"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_13__["MatFormFieldModule"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_13__["MatInputModule"],
-            _angular_common__WEBPACK_IMPORTED_MODULE_12__["CommonModule"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_13__["MatDialogModule"],
-            _angular_material_icon__WEBPACK_IMPORTED_MODULE_15__["MatIconModule"],
-            _angular_material_expansion__WEBPACK_IMPORTED_MODULE_17__["MatExpansionModule"],
-            _angular_material_select__WEBPACK_IMPORTED_MODULE_14__["MatSelectModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_19__["FormsModule"]
+            _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"],
+            _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__["BrowserAnimationsModule"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_7__["CommonModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_9__["FormsModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ReactiveFormsModule"]
         ],
         providers: [],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"]]
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
     })
 ], AppModule);
 
+
+
+/***/ }),
+
+/***/ "./src/app/firestore.imports.ts":
+/*!**************************************!*\
+  !*** ./src/app/firestore.imports.ts ***!
+  \**************************************/
+/*! exports provided: firestoreImports */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "firestoreImports", function() { return firestoreImports; });
+/* harmony import */ var _angular_fire__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/fire */ "./node_modules/@angular/fire/es2015/index.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/es2015/index.js");
+/* harmony import */ var _angular_fire_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/storage */ "./node_modules/@angular/fire/storage/es2015/index.js");
+/* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/fire/auth */ "./node_modules/@angular/fire/auth/es2015/index.js");
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
+
+
+
+
+
+const firestoreImports = [
+    _angular_fire__WEBPACK_IMPORTED_MODULE_0__["AngularFireModule"].initializeApp(src_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].firebaseConfig),
+    _angular_fire__WEBPACK_IMPORTED_MODULE_0__["AngularFireModule"],
+    _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_1__["AngularFirestoreModule"],
+    _angular_fire_storage__WEBPACK_IMPORTED_MODULE_2__["AngularFireStorageModule"],
+    _angular_fire_auth__WEBPACK_IMPORTED_MODULE_3__["AngularFireAuthModule"],
+];
 
 
 /***/ }),
@@ -326,7 +376,7 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".form{\r\n    min-width: 150px;\r\n    max-width: 500px;\r\n    width: 100%;\r\n}\r\n\r\n.full-width{\r\n    width: 100%;\r\n}\r\n\r\n.ingredient{\r\n    width: 33%;\r\n    display: inline-block;\r\n    padding-right: 10px;\r\n}\r\n\r\n.measurement{\r\n    width: 20%;\r\n    display: inline-block;\r\n}\r\n\r\n#ingredient-container{\r\n    display: flex;\r\n}\r\n\r\n#add-recipe-container{\r\n    overflow: visible;\r\n}\r\n\r\n#submit-recipe-button{\r\n    float: right;\r\n\r\n}\r\n\r\n#submit-button-container{\r\n    width: 100%;\r\n    overflow: auto;\r\n    padding-bottom: 1em;\r\n}\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcmVjaXBlLWJvb2svYWRkLXJlY2lwZS9hZGQtcmVjaXBlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxnQkFBZ0I7SUFDaEIsZ0JBQWdCO0lBQ2hCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLFdBQVc7QUFDZjs7QUFFQTtJQUNJLFVBQVU7SUFDVixxQkFBcUI7SUFDckIsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksVUFBVTtJQUNWLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLGFBQWE7QUFDakI7O0FBRUE7SUFDSSxpQkFBaUI7QUFDckI7O0FBRUE7SUFDSSxZQUFZOztBQUVoQjs7QUFFQTtJQUNJLFdBQVc7SUFDWCxjQUFjO0lBQ2QsbUJBQW1CO0FBQ3ZCIiwiZmlsZSI6InNyYy9hcHAvcmVjaXBlLWJvb2svYWRkLXJlY2lwZS9hZGQtcmVjaXBlLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZm9ybXtcclxuICAgIG1pbi13aWR0aDogMTUwcHg7XHJcbiAgICBtYXgtd2lkdGg6IDUwMHB4O1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbn1cclxuXHJcbi5mdWxsLXdpZHRoe1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbn1cclxuXHJcbi5pbmdyZWRpZW50e1xyXG4gICAgd2lkdGg6IDMzJTtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIHBhZGRpbmctcmlnaHQ6IDEwcHg7XHJcbn1cclxuXHJcbi5tZWFzdXJlbWVudHtcclxuICAgIHdpZHRoOiAyMCU7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbn1cclxuXHJcbiNpbmdyZWRpZW50LWNvbnRhaW5lcntcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbn1cclxuXHJcbiNhZGQtcmVjaXBlLWNvbnRhaW5lcntcclxuICAgIG92ZXJmbG93OiB2aXNpYmxlO1xyXG59XHJcblxyXG4jc3VibWl0LXJlY2lwZS1idXR0b257XHJcbiAgICBmbG9hdDogcmlnaHQ7XHJcblxyXG59XHJcblxyXG4jc3VibWl0LWJ1dHRvbi1jb250YWluZXJ7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIG92ZXJmbG93OiBhdXRvO1xyXG4gICAgcGFkZGluZy1ib3R0b206IDFlbTtcclxufSJdfQ== */"
+module.exports = ".form{\r\n    min-width: 150px;\r\n    max-width: 500px;\r\n    width: 100%;\r\n}\r\n\r\n.full-width{\r\n    width: 100%;\r\n}\r\n\r\n.ingredient{\r\n    width: 33%;\r\n    display: inline-block;\r\n    padding-right: 10px;\r\n}\r\n\r\n.measurement{\r\n    width: 20%;\r\n    display: inline-block;\r\n}\r\n\r\n#ingredient-container{\r\n    display: flex;\r\n}\r\n\r\n#add-recipe-container{\r\n    overflow: visible;\r\n}\r\n\r\n#submit-recipe-button{\r\n    float: right;\r\n\r\n}\r\n\r\n#submit-button-container{\r\n    width: 100%;\r\n    overflow: auto;\r\n    padding-bottom: 1em;\r\n}\r\n\r\n#directions-container{\r\n    display: flex;\r\n}\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcmVjaXBlLWJvb2svYWRkLXJlY2lwZS9hZGQtcmVjaXBlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxnQkFBZ0I7SUFDaEIsZ0JBQWdCO0lBQ2hCLFdBQVc7QUFDZjs7QUFFQTtJQUNJLFdBQVc7QUFDZjs7QUFFQTtJQUNJLFVBQVU7SUFDVixxQkFBcUI7SUFDckIsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksVUFBVTtJQUNWLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLGFBQWE7QUFDakI7O0FBRUE7SUFDSSxpQkFBaUI7QUFDckI7O0FBRUE7SUFDSSxZQUFZOztBQUVoQjs7QUFFQTtJQUNJLFdBQVc7SUFDWCxjQUFjO0lBQ2QsbUJBQW1CO0FBQ3ZCOztBQUVBO0lBQ0ksYUFBYTtBQUNqQiIsImZpbGUiOiJzcmMvYXBwL3JlY2lwZS1ib29rL2FkZC1yZWNpcGUvYWRkLXJlY2lwZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmZvcm17XHJcbiAgICBtaW4td2lkdGg6IDE1MHB4O1xyXG4gICAgbWF4LXdpZHRoOiA1MDBweDtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG4uZnVsbC13aWR0aHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG4uaW5ncmVkaWVudHtcclxuICAgIHdpZHRoOiAzMyU7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgICBwYWRkaW5nLXJpZ2h0OiAxMHB4O1xyXG59XHJcblxyXG4ubWVhc3VyZW1lbnR7XHJcbiAgICB3aWR0aDogMjAlO1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG59XHJcblxyXG4jaW5ncmVkaWVudC1jb250YWluZXJ7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG59XHJcblxyXG4jYWRkLXJlY2lwZS1jb250YWluZXJ7XHJcbiAgICBvdmVyZmxvdzogdmlzaWJsZTtcclxufVxyXG5cclxuI3N1Ym1pdC1yZWNpcGUtYnV0dG9ue1xyXG4gICAgZmxvYXQ6IHJpZ2h0O1xyXG5cclxufVxyXG5cclxuI3N1Ym1pdC1idXR0b24tY29udGFpbmVye1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBvdmVyZmxvdzogYXV0bztcclxuICAgIHBhZGRpbmctYm90dG9tOiAxZW07XHJcbn1cclxuXHJcbiNkaXJlY3Rpb25zLWNvbnRhaW5lcntcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbn0iXX0= */"
 
 /***/ }),
 
@@ -355,8 +405,8 @@ __webpack_require__.r(__webpack_exports__);
 let AddRecipeComponent = class AddRecipeComponent {
     constructor(recipeService) {
         this.recipeService = recipeService;
-        this.counter = 1;
-        this.counter2 = 0;
+        this.directionsCounter = 1;
+        this.ingredCounter = 0;
         this.measurements = new _Models_Measurements__WEBPACK_IMPORTED_MODULE_1__["Measurements"]().getMeasurements();
         this.recipe = new src_app_Models_Recipe__WEBPACK_IMPORTED_MODULE_3__["Recipe"]();
         this.recipe.ingredients = Array();
@@ -364,17 +414,25 @@ let AddRecipeComponent = class AddRecipeComponent {
     }
     ngOnInit() {
         //this is a hack need to find a better way to do this
-        this.counterArr = [1];
+        this.directionsArr = [1];
         this.ingredientArr = [0];
     }
     AddDirectionStep() {
-        this.counter++;
-        this.counterArr.push(this.counter);
+        this.directionsCounter++;
+        this.directionsArr.push(this.directionsCounter);
+    }
+    RemoveDirectionStep() {
+        this.directionsCounter--;
+        this.directionsArr.pop();
     }
     AddIngredient() {
-        this.counter2++;
-        this.ingredientArr.push(this.counter2);
+        this.ingredCounter++;
+        this.ingredientArr.push(this.ingredCounter);
         this.recipe.ingredients.push(new src_app_Models_Ingredient__WEBPACK_IMPORTED_MODULE_4__["Ingredient"]());
+    }
+    RemoveIngredient(index) {
+        this.ingredientArr.pop();
+        this.recipe.ingredients.splice(index, 1);
     }
     onSubmit(event) {
         event.preventDefault();
@@ -407,7 +465,7 @@ AddRecipeComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".recipe-container{\r\n    width: 33%;\r\n    margin-right: 5px;\r\n    margin-bottom: 15px;\r\n    display: inline-block;\r\n    max-height: 300px;\r\n    min-height: 300px;\r\n    height: 100%;\r\n    min-width: 200px;\r\n}\r\n#recipe-wrapper{\r\n    padding: 10px 10px;\r\n    height: 100%;\r\n    display: flex;\r\n}\r\n.header-image{\r\n    background-size: cover;\r\n    padding-bottom: 10px;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcmVjaXBlLWJvb2svcmVjaXBlcy9yZWNpcGVzLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxVQUFVO0lBQ1YsaUJBQWlCO0lBQ2pCLG1CQUFtQjtJQUNuQixxQkFBcUI7SUFDckIsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixZQUFZO0lBQ1osZ0JBQWdCO0FBQ3BCO0FBQ0E7SUFDSSxrQkFBa0I7SUFDbEIsWUFBWTtJQUNaLGFBQWE7QUFDakI7QUFFQTtJQUNJLHNCQUFzQjtJQUN0QixvQkFBb0I7QUFDeEIiLCJmaWxlIjoic3JjL2FwcC9yZWNpcGUtYm9vay9yZWNpcGVzL3JlY2lwZXMuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5yZWNpcGUtY29udGFpbmVye1xyXG4gICAgd2lkdGg6IDMzJTtcclxuICAgIG1hcmdpbi1yaWdodDogNXB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMTVweDtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIG1heC1oZWlnaHQ6IDMwMHB4O1xyXG4gICAgbWluLWhlaWdodDogMzAwcHg7XHJcbiAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICBtaW4td2lkdGg6IDIwMHB4O1xyXG59XHJcbiNyZWNpcGUtd3JhcHBlcntcclxuICAgIHBhZGRpbmc6IDEwcHggMTBweDtcclxuICAgIGhlaWdodDogMTAwJTtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbn1cclxuXHJcbi5oZWFkZXItaW1hZ2V7XHJcbiAgICBiYWNrZ3JvdW5kLXNpemU6IGNvdmVyO1xyXG4gICAgcGFkZGluZy1ib3R0b206IDEwcHg7XHJcbn1cclxuIl19 */"
+module.exports = "/* .recipe-container{\r\n    width: 33%;\r\n    margin-right: 5px;\r\n    margin-bottom: 15px;\r\n    display: inline-block;\r\n    max-height: 300px;\r\n    min-height: 300px;\r\n    height: 100%;\r\n    min-width: 200px;\r\n} */\r\n\r\n.recipe-container{\r\n    width: 100%;\r\n    display: inline-block;\r\n}\r\n\r\n#recipe-wrapper{\r\n    padding: 10px 10px;\r\n    height: 100%;\r\n    display: flex;\r\n}\r\n\r\n.header-image{\r\n    background-size: cover;\r\n    padding-bottom: 10px;\r\n}\r\n\r\n.recipe-card{\r\n    width: 33%;\r\n    margin-right: 5px;\r\n    margin-bottom: 15px;\r\n    display: inline-block;\r\n    max-height: 300px;\r\n    min-height: 300px;\r\n    height: 100%;\r\n    min-width: 200px;\r\n}\r\n\r\n.recipe{\r\n    display: inline-block;\r\n}\r\n\r\nmat-card{\r\n    max-height: 180px !important;\r\n    min-height: 180px !important;\r\n    max-width: 210px !important;\r\n    min-width: 210px !important;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcmVjaXBlLWJvb2svcmVjaXBlcy9yZWNpcGVzLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7Ozs7OztHQVNHOztBQUVIO0lBQ0ksV0FBVztJQUNYLHFCQUFxQjtBQUN6Qjs7QUFDQTtJQUNJLGtCQUFrQjtJQUNsQixZQUFZO0lBQ1osYUFBYTtBQUNqQjs7QUFFQTtJQUNJLHNCQUFzQjtJQUN0QixvQkFBb0I7QUFDeEI7O0FBR0E7SUFDSSxVQUFVO0lBQ1YsaUJBQWlCO0lBQ2pCLG1CQUFtQjtJQUNuQixxQkFBcUI7SUFDckIsaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixZQUFZO0lBQ1osZ0JBQWdCO0FBQ3BCOztBQUVBO0lBQ0kscUJBQXFCO0FBQ3pCOztBQUVBO0lBQ0ksNEJBQTRCO0lBQzVCLDRCQUE0QjtJQUM1QiwyQkFBMkI7SUFDM0IsMkJBQTJCO0FBQy9CIiwiZmlsZSI6InNyYy9hcHAvcmVjaXBlLWJvb2svcmVjaXBlcy9yZWNpcGVzLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKiAucmVjaXBlLWNvbnRhaW5lcntcclxuICAgIHdpZHRoOiAzMyU7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDVweDtcclxuICAgIG1hcmdpbi1ib3R0b206IDE1cHg7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgICBtYXgtaGVpZ2h0OiAzMDBweDtcclxuICAgIG1pbi1oZWlnaHQ6IDMwMHB4O1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgbWluLXdpZHRoOiAyMDBweDtcclxufSAqL1xyXG5cclxuLnJlY2lwZS1jb250YWluZXJ7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxufVxyXG4jcmVjaXBlLXdyYXBwZXJ7XHJcbiAgICBwYWRkaW5nOiAxMHB4IDEwcHg7XHJcbiAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG59XHJcblxyXG4uaGVhZGVyLWltYWdle1xyXG4gICAgYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcclxuICAgIHBhZGRpbmctYm90dG9tOiAxMHB4O1xyXG59XHJcblxyXG5cclxuLnJlY2lwZS1jYXJke1xyXG4gICAgd2lkdGg6IDMzJTtcclxuICAgIG1hcmdpbi1yaWdodDogNXB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMTVweDtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIG1heC1oZWlnaHQ6IDMwMHB4O1xyXG4gICAgbWluLWhlaWdodDogMzAwcHg7XHJcbiAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICBtaW4td2lkdGg6IDIwMHB4O1xyXG59XHJcblxyXG4ucmVjaXBle1xyXG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG59XHJcblxyXG5tYXQtY2FyZHtcclxuICAgIG1heC1oZWlnaHQ6IDE4MHB4ICFpbXBvcnRhbnQ7XHJcbiAgICBtaW4taGVpZ2h0OiAxODBweCAhaW1wb3J0YW50O1xyXG4gICAgbWF4LXdpZHRoOiAyMTBweCAhaW1wb3J0YW50O1xyXG4gICAgbWluLXdpZHRoOiAyMTBweCAhaW1wb3J0YW50O1xyXG59XHJcbiJdfQ== */"
 
 /***/ }),
 
@@ -591,20 +649,6 @@ let RecipeService = class RecipeService {
         newRecipe.ingredients = recipe.ingredients;
         return newRecipe;
     }
-    fireStoreGetBasedOnDocumentId() {
-        let test = this.afs.doc(`recipes/hI7FPCz11wifuWKaDk8l`);
-        let test2 = test.valueChanges();
-        test2.subscribe(x => {
-            console.log('x is: ', x);
-        });
-    }
-    fireStoreGetBasedOnFieldName() {
-        let test = this.afs.collection('recipes', ref => ref.where('Name', '==', 'Mac and Cheese'));
-        let test2 = test.valueChanges();
-        test2.subscribe(x => {
-            console.log('this is x: ', x);
-        });
-    }
     AddRecipe(recipe) {
         let temp = [];
         recipe.ingredients.forEach(x => {
@@ -623,6 +667,21 @@ let RecipeService = class RecipeService {
         })
             .catch(function (error) {
             console.error("Error writing document: ", error);
+        });
+    }
+    // Documentation Code on how to call for certain thins
+    fireStoreGetBasedOnDocumentId() {
+        let test = this.afs.doc(`recipes/hI7FPCz11wifuWKaDk8l`);
+        let test2 = test.valueChanges();
+        test2.subscribe(x => {
+            console.log('x is: ', x);
+        });
+    }
+    fireStoreGetBasedOnFieldName() {
+        let test = this.afs.collection('recipes', ref => ref.where('Name', '==', 'Mac and Cheese'));
+        let test2 = test.valueChanges();
+        test2.subscribe(x => {
+            console.log('this is x: ', x);
         });
     }
 };

@@ -34,23 +34,6 @@ export class RecipeService {
     return newRecipe;
   }
 
-  public fireStoreGetBasedOnDocumentId() {
-    let test = this.afs.doc(`recipes/hI7FPCz11wifuWKaDk8l`);
-    let test2 = test.valueChanges();
-
-    test2.subscribe(x => {
-      console.log('x is: ', x);
-    })
-  }
-
-  public fireStoreGetBasedOnFieldName() {
-    let test = this.afs.collection<Recipe>('recipes', ref => ref.where('Name', '==', 'Mac and Cheese'));
-    let test2 = test.valueChanges();
-    test2.subscribe(x => {
-      console.log('this is x: ', x);
-    })
-  }
-
   public AddRecipe(recipe: Recipe): void {
 
     let temp = [];
@@ -74,4 +57,25 @@ export class RecipeService {
         console.error("Error writing document: ", error);
       });
   }
+
+  
+
+  // Documentation Code on how to call for certain thins
+  private fireStoreGetBasedOnDocumentId() {
+    let test = this.afs.doc(`recipes/hI7FPCz11wifuWKaDk8l`);
+    let test2 = test.valueChanges();
+
+    test2.subscribe(x => {
+      console.log('x is: ', x);
+    })
+  }
+
+  private fireStoreGetBasedOnFieldName() {
+    let test = this.afs.collection<Recipe>('recipes', ref => ref.where('Name', '==', 'Mac and Cheese'));
+    let test2 = test.valueChanges();
+    test2.subscribe(x => {
+      console.log('this is x: ', x);
+    })
+  }
+
 }
