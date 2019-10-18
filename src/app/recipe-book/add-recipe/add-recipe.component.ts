@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/Models/Recipe';
 import { Ingredient } from 'src/app/Models/Ingredient';
 import { RecipeService } from 'src/app/services/recipe.service';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-add-recipe',

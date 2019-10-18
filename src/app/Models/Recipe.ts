@@ -7,6 +7,7 @@ export class Recipe{
     ingredients: Array<Ingredient>;
     image: string;
     servings: number;
+    metaData: Array<string>;
 
     constructor() {
         this.name = '';        

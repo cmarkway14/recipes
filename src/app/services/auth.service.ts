@@ -12,6 +12,7 @@ import { User } from '../Models/User';
 })
 export class AuthService {
   user$: Observable<User>;
+  loggedIn$: boolean = false;
 
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
     this.user$ = this.afAuth.authState.pipe(
@@ -33,6 +34,7 @@ export class AuthService {
 
   public async signOut() {
     await this.afAuth.auth.signOut();
+    this.loggedIn$ = false;
     return this.router.navigate(['/']);
   }
 
@@ -45,6 +47,8 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL
     };
+
+    this.loggedIn$ = true;
 
     return userRef.set(data, {merge: true});
   }

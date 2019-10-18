@@ -1,25 +1,68 @@
 <div id="header">
-  <span>Recipes</span>
+  <a [routerLink]="['/']" routerLinkActive="router-link-active" id="header-name">Recipes</a>
   <span class="spacer"></span>
-  <div class="user" *ngIf="auth.user$ | async as user; else login">
-    <span>Welcome, {{user.displayName}}</span>
+  <div id="user-info">
+    <span *ngIf="auth.user$ | async as user; else guest" id="user">
+      Welcome, {{user.displayName | titlecase}}
+    </span>
+    <ng-template #guest>
+      <span id="user">Welcome, Guest</span>
+    </ng-template>
+  </div>
+  <div id="menu-container">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon id="menu">toc</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+
+      <button mat-menu-item [routerLink]="['Book']">
+        <mat-icon class="material-icons-outlined">book</mat-icon>
+        <span>Recipes</span>
+      </button>
+
+      <button mat-menu-item *ngIf="auth.user$ | async as user;" [routerLink]="['Account']">
+          <mat-icon>account_circle</mat-icon>
+          <span>Account</span>
+        </button>
+
+      <button mat-menu-item *ngIf="auth.user$ | async as user; else login" (click)="auth.signOut()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Sign Out</span>
+      </button>
+
+      <ng-template #login>
+        <button mat-menu-item (click)="auth.googleSignIn()">
+          <mat-icon>fingerprint</mat-icon>
+          <span>Sign In</span>
+        </button>
+      </ng-template>
+
+      <!-- <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+      </button> -->
+    </mat-menu>
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>
+
+
+<!-- <app-home></app-home> -->
+
+<!-- <div id="footer">
+  Testing footer
+</div> -->
+
+  <!-- <div class="user" *ngIf="auth.user$ | async as user; else login">
+    <span id="user">Welcome, {{user.displayName | titlecase}}</span>
     <br />
     <button mat-raised-button color="primary" class="button" id='signout' (click)="auth.signOut()">Sign Out</button>
   </div>
   <div class="user">
     <ng-template #login>
-      <button mat-raised-button color="primary" class="inline" (click)="auth.googleSignIn()">
+      <button id="login-button" mat-raised-button color="primary" class="inline" (click)="auth.googleSignIn()">
         Login
       </button>
     </ng-template>
-  </div>
-
-</div>
-
-
-<router-outlet></router-outlet>
-<!-- <app-home></app-home> -->
-
-<div id="footer">
-  Testing footer
-</div>
+  </div> -->

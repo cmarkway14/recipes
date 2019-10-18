@@ -10,3 +10,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     flex: 1 1 auto;
 }
   
+.inline{
+    display: inline-block;
+}
+
+/* 0f0d35
+   f6f7f3
+   393b63
+   f4bb8a
+    */

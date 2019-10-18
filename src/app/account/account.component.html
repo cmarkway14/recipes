@@ -1,0 +1,34 @@
+<div id="account-container">
+    <h3 id="account-header">Account Information</h3>
+    <div id="account-information">
+        <button *ngIf="!edit" mat-button id="edit-information" (click)="enableEdit()">
+            <mat-icon [inline]='true'>edit</mat-icon>
+        </button>
+
+        <form #recipeForm='ngForm' (ngSubmit)="saveInformation($event)">
+
+            <button *ngIf="edit" mat-button id="save-information" (click)="saveInformation()">
+                <mat-icon [inline]='true'>save_alt</mat-icon>
+            </button>
+            <div id="account-username" ng="auth.user$ | async as user;">
+                <div class="inline spacing">
+                    <mat-form-field class="account-headers">
+                        <input matInput placeholder="First Name" [(ngModel)]="firstName" name="firstName"
+                            disabled='{{!edit}}' required>
+                    </mat-form-field>
+                </div>
+                <div class="inline spacing">
+                    <mat-form-field class="account-headers">
+                        <input matInput placeholder="Last Name" [(ngModel)]="lastName" name="lastName"
+                            disabled='{{!edit}}' required>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <br><br>
+            <hr>
+            <br><br>
+            
+        </form>
+    </div>
+</div>

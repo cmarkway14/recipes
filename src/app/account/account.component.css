@@ -1,0 +1,42 @@
+#account-container{
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+#account-header{
+    text-align: center;
+    font-size: 2em;
+}
+
+#account-information{
+    -moz-box-shadow: 0 0 50px rgb(46, 46, 46);
+    -webkit-box-shadow: 0 0 50px rgb(46, 46, 46);
+    box-shadow: 0 0 50px rgb(46, 46, 46);
+    height: 80vh;
+    background-color: #ccc;
+    padding: 75px;
+}
+
+#account-username{
+    text-align: center;
+}
+
+.account-headers{
+    font-size: 30px;
+    width: 100%;
+    min-width: 350px;
+}
+
+.spacing{
+    margin: 0 25px 0 25px;
+}
+
+#edit-information{
+    float: right;
+    font-size: 50px;
+}
+
+#save-information{
+    float: right;
+    font-size: 50px;
+}
