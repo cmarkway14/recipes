@@ -40,7 +40,6 @@ export class AccountComponent implements OnInit {
     this.auth.user$.subscribe(user => {
       user.displayName = this.firstName + " " + this.lastName;
 
-      console.log(user)
       user.address.zip = 63021;
       user.address.state = "MO";
       user.address.street = "1231 Orchard Village Lane Apt B.";
