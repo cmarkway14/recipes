@@ -21,6 +21,7 @@ export class AccountComponent implements OnInit {
   selectedState: string;
   states: Array<string> = [];
   zip: number;
+  city: string;
 
 
   constructor(public auth: AuthService, private accountService: AccountService) { 
@@ -38,6 +39,7 @@ export class AccountComponent implements OnInit {
       this.address2 = user.address.addressLine2;
       this.selectedState = user.address.state;
       this.zip = user.address.zip;
+      this.city = user.address.city;
       
     });
   }
@@ -57,6 +59,8 @@ export class AccountComponent implements OnInit {
       user.address.zip = 63021;
       user.address.state = this.selectedState;
       user.address.addressLine1 = this.address1;
+      user.address.addressLine2 = this.address2;
+      user.address.city = this.city;
 
       this.accountService.updateUserInformation(user);
     });

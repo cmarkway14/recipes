@@ -40,3 +40,36 @@
     float: right;
     font-size: 50px;
 }
+
+.address-lines{
+    font-size: 22px;
+    min-width: 20%;
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.address-container{
+    margin: 0 25px 0 25px;
+    display: inline-block;
+    min-width: 100%;
+    text-align: center;
+}
+
+#state-selector{
+    margin-right: 15px;
+    margin-left: 15px;
+    font-size: 22px;
+}
+
+#zip-selector{
+    margin-right: 15px;
+    margin-left: 15px;
+    font-size: 22px;
+}
+
+#city-input{
+    margin-right: 15px;
+    margin-left: 15px;
+    font-size: 22px;
+}

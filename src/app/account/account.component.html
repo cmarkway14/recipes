@@ -29,27 +29,30 @@
             <hr>
             <br><br>
             <div>
-                <div class="inline spacing">
-                    <mat-form-field class="account-headers">
-                        <input matInput placeholder="Address Line 1" [(ngModel)]="address1" name="address1" disabled='{{!edit}}' required>
+                <div class="address-container">
+                    <mat-form-field class="address-lines">
+                        <input matInput placeholder="Address Line 1" [(ngModel)]="address1" name="address1"
+                            disabled='{{!edit}}' required>
+                    </mat-form-field>
+                    <mat-form-field class="address-lines">
+                        <input matInput placeholder="Address Line 2" [(ngModel)]="address2" name="address2"
+                            disabled='{{!edit}}' required>
                     </mat-form-field>
                 </div>
-                <div class="inline spacing">
-                    <mat-form-field class="account-headers">
-                        <input matInput placeholder="Address Line 2" [(ngModel)]="address2" name="address2" disabled='{{!edit}}' required>
+                <div class="address-container">
+                    <mat-form-field id="city-input">
+                        <input matInput placeholder="City" [(ngModel)]="city" name="city" disabled='{{!edit}}' required>
                     </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field>
+                    <mat-form-field id="state-selector">
                         <mat-label>Select a State</mat-label>
                         <mat-select [(ngModel)]="selectedState" name="selectedState" disabled='{{!edit}}' required>
                             <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                </div>
-                <div>
-                    <mat-form-field class="account-headers">
-                        <input matInput placeholder="ZIP Code" [(ngModel)]="zip" name="zip" disabled='{{!edit}}' required>
+
+                    <mat-form-field id="zip-selector">
+                        <input matInput placeholder="ZIP Code" [(ngModel)]="zip" name="zip" disabled='{{!edit}}'
+                            required>
                     </mat-form-field>
                 </div>
             </div>
