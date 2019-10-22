@@ -1,3 +1,4 @@
+import { USStates } from './../Models/USStates';
 import { AccountService } from './../services/account.service';
 import { FormGroup } from '@angular/forms';
 import { AuthService } from './../services/auth.service';
@@ -13,17 +14,33 @@ import { Address } from '../Models/Address';
 export class AccountComponent implements OnInit {
   firstName: string;
   lastName: string;
+  address1: string
+  address2: string
   edit: boolean = false;
   accountForm: FormGroup;
+  selectedState: string;
+  states: Array<string> = [];
+  zip: number;
+  city: string;
 
 
   constructor(public auth: AuthService, private accountService: AccountService) { 
+
+    this.states = USStates;
     this.auth.user$.subscribe(user => {
       let displayNameArr = user.displayName.split(" ");
+
       if(displayNameArr.length > 0){
         this.firstName = this.capFirstLetter(displayNameArr[0]);
         this.lastName = this.capFirstLetter(displayNameArr[1]);
       }      
+
+      this.address1 = user.address.addressLine1;
+      this.address2 = user.address.addressLine2;
+      this.selectedState = user.address.state;
+      this.zip = user.address.zip;
+      this.city = user.address.city;
+      
     });
   }
 
@@ -39,11 +56,11 @@ export class AccountComponent implements OnInit {
     this.edit = false;
     this.auth.user$.subscribe(user => {
       user.displayName = this.firstName + " " + this.lastName;
-
-      console.log(user)
       user.address.zip = 63021;
-      user.address.state = "MO";
-      user.address.street = "1231 Orchard Village Lane Apt B.";
+      user.address.state = this.selectedState;
+      user.address.addressLine1 = this.address1;
+      user.address.addressLine2 = this.address2;
+      user.address.city = this.city;
 
       this.accountService.updateUserInformation(user);
     });

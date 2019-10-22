@@ -1,5 +1,7 @@
 export interface Address {
+    city: string;
     state: string;
     zip: number;
-    street: string;
+    addressLine1: string;
+    addressLine2?: string;
 }
