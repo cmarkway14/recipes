@@ -12,9 +12,16 @@
 .recipe-container{
     width: 100%;
     display: inline-block;
+    -moz-box-shadow: 0 0 50px rgb(46, 46, 46);
+    -webkit-box-shadow: 0 0 50px rgb(46, 46, 46);
+    box-shadow: 0 0 50px rgb(46, 46, 46);
+    height: 80vh;
+    background-color: #ccc;
+    padding: 75px;
 }
 #recipe-wrapper{
-    padding: 10px 10px;
+    padding-left: 100px;
+    padding-right: 100px;
     height: 100%;
     display: flex;
 }
@@ -45,4 +52,9 @@ mat-card{
     min-height: 180px !important;
     max-width: 210px !important;
     min-width: 210px !important;
+}
+
+#recipe-header {
+    text-align: center;
+    font-size: 2em;
 }
