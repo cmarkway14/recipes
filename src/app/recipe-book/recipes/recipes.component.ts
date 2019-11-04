@@ -1,3 +1,4 @@
+import { RecipeDetialsComponent } from './../recipe-detials/recipe-detials.component';
 import { AddRecipeComponent } from './../add-recipe/add-recipe.component';
 import { Ingredient } from './../../Models/Ingredient';
 import { Component, OnInit } from '@angular/core';
@@ -38,5 +39,13 @@ export class RecipesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+
+  public OpenDetials(recipe: Recipe) : void {
+    const dialogRef = this.dialog.open(RecipeDetialsComponent, {
+      width: '75%',
+      height: '75%',
+      data: recipe
+    })
   }
 }

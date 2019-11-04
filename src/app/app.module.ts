@@ -10,15 +10,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { materials } from './angular.materials';
 import { firestoreImports } from './firestore.imports';
 import { AccountComponent } from './account/account.component';
+import { RecipeDetialsComponent } from './recipe-book/recipe-detials/recipe-detials.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipesComponent,
     AddRecipeComponent,
-    AccountComponent
+    AccountComponent,
+    RecipeDetialsComponent
   ],
-  entryComponents: [AddRecipeComponent],
+  entryComponents: [AddRecipeComponent, RecipeDetialsComponent],
   imports: [
     ...firestoreImports,
     ...materials,
