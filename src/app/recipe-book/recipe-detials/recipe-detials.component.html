@@ -1,5 +1,8 @@
-<mat-vertical-stepper>
-    <mat-step>
-        <p>testing</p>
-    </mat-step>
+<mat-vertical-stepper #stepper>
+    <div *ngFor="let direction of recipe.directions">
+        <mat-step>
+            {{direction}}
+            <button *ngIf='stepper._selectedIndex + 1 !== recipe.directions.length' (click)='Next(stepper)'>Next</button>
+        </mat-step>
+    </div>
 </mat-vertical-stepper>
