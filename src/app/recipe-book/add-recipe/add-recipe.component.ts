@@ -58,10 +58,10 @@ export class AddRecipeComponent implements OnInit {
 
   public onSubmit(event: Event) {
     event.preventDefault();
-    this.recipe.ingredients.forEach(x => {
-      x.amount += ' ';
-      x.amount += x.measurement;
-    });
+    // this.recipe.ingredients.forEach(x => {
+    //   x.amount += ' ';
+    //   x.amount += x.measurement;
+    // });
     this.recipeService.AddRecipe(this.recipe);
   }
 }

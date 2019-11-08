@@ -3,6 +3,7 @@
         <mat-step>
             {{direction}}
             <button *ngIf='stepper._selectedIndex + 1 !== recipe.directions.length' (click)='Next(stepper)'>Next</button>
+            <button *ngIf='direction !== recipe.directions[0]' (click)='Pervious(stepper)'>Pervious</button>
         </mat-step>
     </div>
 </mat-vertical-stepper>

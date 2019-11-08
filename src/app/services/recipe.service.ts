@@ -38,7 +38,7 @@ export class RecipeService {
 
     let temp = [];
     recipe.ingredients.forEach(x => {
-       temp.push(new FireStoreIngredient(x.name, x.amount));
+       temp.push(new FireStoreIngredient(x.name, x.amount, x.measurement));
     });
 
     const ingredients = temp.map((obj) => {return Object.assign({}, obj)});

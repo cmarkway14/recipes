@@ -1,10 +1,12 @@
 export class FireStoreIngredient {
-  key: string;
-  value: string;
+  name: string;
+  amount: string;
+  measurement: string
 
-  constructor(key: string, value: string) {
-    this.key = key;
-    this.value = value;
+  constructor(name: string, amount: string, measurement: string) {
+    this.name = name;
+    this.amount = amount;
+    this.measurement = measurement;
   }
   
 }

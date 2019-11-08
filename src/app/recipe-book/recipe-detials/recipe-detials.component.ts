@@ -1,3 +1,4 @@
+import { Ingredient } from './../../Models/Ingredient';
 import { Recipe } from 'src/app/Models/Recipe';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatStepper } from '@angular/material';
@@ -10,14 +11,17 @@ import { MAT_DIALOG_DATA, MatStepper } from '@angular/material';
 export class RecipeDetialsComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public recipe: Recipe) { 
-
+    console.log('re: ', recipe);
   }
 
   ngOnInit() {
   }
 
   public Next(stepper : MatStepper) : void{
-    console.log(stepper._selectedIndex)
     stepper.next();
+  }
+
+  public Pervious(stepper: MatStepper) : void{
+    stepper.previous();
   }
 }
