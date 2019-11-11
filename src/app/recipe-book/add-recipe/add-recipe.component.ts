@@ -13,6 +13,7 @@ import { FormGroup } from '@angular/forms';
 export class AddRecipeComponent implements OnInit {
 
   recipeNameForm: FormGroup;
+  recipeImage: string;
 
   directionsArr: number[];
   directionsCounter: number = 1;
@@ -45,6 +46,7 @@ export class AddRecipeComponent implements OnInit {
     this.directionsCounter--;
     this.directionsArr.pop();
   }
+
   public AddIngredient() : void {
     this.ingredCounter++;
     this.ingredientArr.push(this.ingredCounter);
@@ -64,4 +66,10 @@ export class AddRecipeComponent implements OnInit {
     // });
     this.recipeService.AddRecipe(this.recipe);
   }
+
+  
+  public Upload(event){
+    this.recipeService.UploadImage(event);
+  }
+
 }

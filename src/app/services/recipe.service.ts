@@ -4,6 +4,8 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { Recipe } from '../Models/Recipe';
 import { FireStoreIngredient } from '../Models/FireStoreIngredient';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
+import { finalize } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +14,18 @@ export class RecipeService {
 
   private recipeCollection: AngularFirestoreCollection<Recipe>;
   recipe$: Observable<Recipe[]>;
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  uploadPercent: Observable<number>;
+  downloadURL$: Observable<string>;
+  imageRef: any;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private storage: AngularFireStorage) {
     this.recipeCollection = this.afs.collection<Recipe>('recipes');
     this.recipe$ = this.recipeCollection.valueChanges();
+
+
+
   }
 
   public GetAllRecipes() {
@@ -38,10 +48,10 @@ export class RecipeService {
 
     let temp = [];
     recipe.ingredients.forEach(x => {
-       temp.push(new FireStoreIngredient(x.name, x.amount, x.measurement));
+      temp.push(new FireStoreIngredient(x.name, x.amount, x.measurement));
     });
 
-    const ingredients = temp.map((obj) => {return Object.assign({}, obj)});
+    const ingredients = temp.map((obj) => { return Object.assign({}, obj) });
 
     this.recipeCollection.doc(recipe.name).set({
       Name: recipe.name,
@@ -49,6 +59,7 @@ export class RecipeService {
       Directions: recipe.directions,
       Servings: recipe.servings,
       ingredients: ingredients,
+      Image: this.downloadURL$
     })
       .then(function () {
         console.log("Document successfully written!");
@@ -58,7 +69,19 @@ export class RecipeService {
       });
   }
 
-  
+  public async UploadImage(event) {
+    const id = Math.random().toString(36).substring(2);
+    this.ref = this.storage.ref(id);
+    this.task = this.ref.put(event.target.files[0]);
+
+    this.task.snapshotChanges().pipe(
+      finalize(() => {
+        this.ref.getDownloadURL().subscribe(url => {
+          this.downloadURL$ = url;
+        });
+      })
+    ).subscribe();
+  }
 
   // Documentation Code on how to call for certain thins
   private fireStoreGetBasedOnDocumentId() {
