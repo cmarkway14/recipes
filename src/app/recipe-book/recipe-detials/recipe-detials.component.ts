@@ -11,7 +11,7 @@ import { MAT_DIALOG_DATA, MatStepper } from '@angular/material';
 export class RecipeDetialsComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public recipe: Recipe) { 
-    console.log('re: ', recipe);
+    
   }
 
   ngOnInit() {
