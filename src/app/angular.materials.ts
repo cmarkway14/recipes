@@ -10,6 +10,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 export const materials = [
     MatButtonModule,
@@ -23,5 +24,6 @@ export const materials = [
     MatSelectModule,
     MatChipsModule,
     MatMenuModule,
-    MatStepperModule
+    MatStepperModule,
+    MatGridListModule
 ];

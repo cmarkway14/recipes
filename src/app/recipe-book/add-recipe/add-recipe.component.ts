@@ -4,6 +4,7 @@ import { Recipe } from 'src/app/Models/Recipe';
 import { Ingredient } from 'src/app/Models/Ingredient';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-add-recipe',
@@ -21,8 +22,9 @@ export class AddRecipeComponent implements OnInit {
   ingredientArr: number[];
   measurements: string[];
   recipe: Recipe;
+  imgUrl: any;
 
-  constructor(private recipeService: RecipeService) {
+  constructor(private recipeService: RecipeService, private dialogRef: MatDialogRef<AddRecipeComponent>) {
     this.measurements = new Measurements().getMeasurements();
     this.recipe = new Recipe();
     this.recipe.ingredients = Array<Ingredient>();
@@ -32,9 +34,7 @@ export class AddRecipeComponent implements OnInit {
   ngOnInit() {
     //this is a hack need to find a better way to do this
     this.directionsArr = [1];
-    this.ingredientArr = [0];
-
-    
+    this.ingredientArr = [0];    
   }
 
   public AddDirectionStep() : void {
@@ -42,7 +42,7 @@ export class AddRecipeComponent implements OnInit {
     this.directionsArr.push(this.directionsCounter);
   }
 
-  public RemoveDirectionStep() : void{
+  public RemoveDirectionStep() : void {
     this.directionsCounter--;
     this.directionsArr.pop();
   }
@@ -58,18 +58,31 @@ export class AddRecipeComponent implements OnInit {
     this.recipe.ingredients.splice(index, 1);
   }
 
-  public onSubmit(event: Event) {
+  public onSubmit(event: Event) : void {
     event.preventDefault();
     // this.recipe.ingredients.forEach(x => {
     //   x.amount += ' ';
     //   x.amount += x.measurement;
     // });
     this.recipeService.AddRecipe(this.recipe);
-  }
 
+    this.dialogRef.close();
+    
+  }
   
-  public Upload(event){
-    this.recipeService.UploadImage(event);
+  public Upload(event) : void {
+
+    if (event.target.files && event.target.files[0]) {
+      this.recipeService.UploadImage(event);
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.imgUrl = event.target.result;
+      }
+    }
+    
   }
 
 }

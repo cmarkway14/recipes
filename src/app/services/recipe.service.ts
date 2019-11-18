@@ -83,7 +83,7 @@ export class RecipeService {
     ).subscribe();
   }
 
-  // Documentation Code on how to call for certain thins
+  // Documentation Code on how to call for certain things
   private fireStoreGetBasedOnDocumentId() {
     let test = this.afs.doc(`recipes/hI7FPCz11wifuWKaDk8l`);
     let test2 = test.valueChanges();

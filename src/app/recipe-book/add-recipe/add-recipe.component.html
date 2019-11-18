@@ -11,8 +11,13 @@
                     Recipe Name
                 </mat-expansion-panel-header>
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Recipe Name" [(ngModel)]="recipe.name" name="RecipeName">
+                    <input matInput placeholder="Recipe Name" [(ngModel)]="recipe.name" name="RecipeName" required>
                 </mat-form-field>
+                <div>
+                    <h3>Upload an image of the dish.</h3>
+                    <input type="file" (change)="Upload($event)" accept=".png,.jpg"  required/>
+                    <img [src]="imgUrl">
+                </div>
             </mat-expansion-panel>
 
             <mat-expansion-panel>

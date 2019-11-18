@@ -41,12 +41,11 @@ export class RecipesComponent implements OnInit {
     });
   }
 
-  public Upload(event){
-    this.recipeService.UploadImage(event).then(
+  // public Upload(event){
+  //   this.recipeService.UploadImage(event).then(
       
-    );
-    console.log('here')
-  }
+  //   );
+  // }
 
   public OpenDetials(recipe: Recipe) : void {
     const dialogRef = this.dialog.open(RecipeDetialsComponent, {
