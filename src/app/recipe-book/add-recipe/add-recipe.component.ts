@@ -60,10 +60,7 @@ export class AddRecipeComponent implements OnInit {
 
   public onSubmit(event: Event) : void {
     event.preventDefault();
-    // this.recipe.ingredients.forEach(x => {
-    //   x.amount += ' ';
-    //   x.amount += x.measurement;
-    // });
+
     this.recipeService.AddRecipe(this.recipe);
 
     this.dialogRef.close();
@@ -78,11 +75,11 @@ export class AddRecipeComponent implements OnInit {
 
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
-      reader.onload = (event) => { // called once readAsDataURL is completed
-        this.imgUrl = event.target.result;
+      reader.onload = (event2) => { // called once readAsDataURL is completed
+        this.imgUrl = (<FileReader>event2.target).result;
       }
     }
-    
+
   }
 
 }

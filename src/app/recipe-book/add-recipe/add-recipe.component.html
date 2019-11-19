@@ -16,7 +16,7 @@
                 <div>
                     <h3>Upload an image of the dish.</h3>
                     <input type="file" (change)="Upload($event)" accept=".png,.jpg"  required/>
-                    <img [src]="imgUrl">
+                    <img *ngIf="imgUrl !==  undefined" [src]="imgUrl">
                 </div>
             </mat-expansion-panel>
 
