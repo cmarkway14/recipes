@@ -11,6 +11,9 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatListModule} from '@angular/material/list';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 export const materials = [
     MatButtonModule,
@@ -25,5 +28,7 @@ export const materials = [
     MatChipsModule,
     MatMenuModule,
     MatStepperModule,
-    MatGridListModule
+    MatGridListModule,
+    MatListModule,
+    MatCheckboxModule,
 ];

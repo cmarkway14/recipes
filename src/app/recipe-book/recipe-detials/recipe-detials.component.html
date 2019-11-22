@@ -1,26 +1,42 @@
-<mat-vertical-stepper #stepper>
+<mat-horizontal-stepper #stepper>
     <mat-step>
-        <mat-grid-list cols="2" rowHeight="2:1">
-            <mat-grid-tile>
-                <div id="text-inside">
-                    <ng-template matStepLabel>Gather Ingredients</ng-template>
-                    <li *ngFor="let ingredient of recipe.ingredients">
-                        {{ingredient.amount}} {{ingredient.measurement}} {{ingredient.name}}
-                    </li>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <img [src]="recipe.image">
-            </mat-grid-tile>
-        </mat-grid-list>
+        <div id="ingredients-container">
+            <ng-template matStepLabel>Gather Ingredients</ng-template>
+            <mat-list *ngFor="let ingredient of recipe.ingredients" role="list">
+                <mat-checkbox color='primary' class='ingredient-checkbox'>
+                    <mat-list-item role="listitem">{{ingredient.amount}} {{ingredient.measurement}} {{ingredient.name}}
+                    </mat-list-item>
+                </mat-checkbox>
+            </mat-list>
+        </div>
+        <div id='img-container'>
+            <img id='recipe-img' [src]='recipe.image'>
+        </div>
+        <!-- <div id="grid-container">
+            <mat-grid-list cols="2" rowHeight="4:1">
+                <mat-grid-tile>
+                    <div id="text-inside">
+                        <ng-template matStepLabel>Gather Ingredients</ng-template>
+                        <mat-list *ngFor="let ingredient of recipe.ingredients" role="list">
+                            <mat-list-item role="listitem">{{ingredient.amount}} {{ingredient.measurement}}
+                                {{ingredient.name}}</mat-list-item>
+                        </mat-list>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <img [src]="recipe.image">
+                </mat-grid-tile>
+            </mat-grid-list>
 
-        <button (click)='Next(stepper)'>Next</button>
+            <button (click)='Next(stepper)'>Next</button>
+        </div> -->
     </mat-step>
-    <div *ngFor="let direction of recipe.directions">
+    <div *ngFor="let direction of recipe.directions; let i = index">
         <mat-step>
+            <ng-template matStepLabel>Step {{i+1}}</ng-template>
             {{direction}}
             <button *ngIf='stepper._selectedIndex !== recipe.directions.length' (click)='Next(stepper)'>Next</button>
             <button *ngIf='direction !== recipe.directions[0] -1' (click)='Pervious(stepper)'>Pervious</button>
         </mat-step>
     </div>
-</mat-vertical-stepper>
+</mat-horizontal-stepper>

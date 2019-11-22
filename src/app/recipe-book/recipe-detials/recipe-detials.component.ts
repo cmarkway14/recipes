@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatStepper } from '@angular/material';
   styleUrls: ['./recipe-detials.component.css']
 })
 export class RecipeDetialsComponent implements OnInit {
+  index: number = 1;
 
   constructor(@Inject(MAT_DIALOG_DATA) public recipe: Recipe) { 
   }
