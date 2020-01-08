@@ -1,10 +1,9 @@
-import { Measurements } from './../../Models/Measurements';
+import { Measurements } from '../../Models/Measurements';
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/Models/Recipe';
 import { Ingredient } from 'src/app/Models/Ingredient';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-add-recipe',
@@ -24,7 +23,7 @@ export class AddRecipeComponent implements OnInit {
   recipe: Recipe;
   imgUrl: any;
 
-  constructor(private recipeService: RecipeService, private dialogRef: MatDialogRef<AddRecipeComponent>) {
+  constructor(private recipeService: RecipeService) {
     this.measurements = new Measurements().getMeasurements();
     this.recipe = new Recipe();
     this.recipe.ingredients = Array<Ingredient>();
@@ -61,10 +60,7 @@ export class AddRecipeComponent implements OnInit {
   public onSubmit(event: Event) : void {
     event.preventDefault();
 
-    this.recipeService.AddRecipe(this.recipe);
-
-    this.dialogRef.close();
-    
+    this.recipeService.AddRecipe(this.recipe);    
   }
   
   public Upload(event) : void {

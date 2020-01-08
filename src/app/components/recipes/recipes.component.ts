@@ -1,6 +1,4 @@
-import { RecipeDetialsComponent } from './../recipe-detials/recipe-detials.component';
-import { AddRecipeComponent } from './../add-recipe/add-recipe.component';
-import { Ingredient } from './../../Models/Ingredient';
+import { RecipeDetialsComponent } from '../recipe-detials/recipe-detials.component';
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/Models/Recipe';
 import { RecipeService } from 'src/app/services/recipe.service';
@@ -27,19 +25,19 @@ export class RecipesComponent implements OnInit {
     });
   }
 
-  public AddRecipe(){
-    const dialogRef = this.dialog.open(AddRecipeComponent, {
-      width: '75%',
-      height: '75%',
-      data: {
+  // public AddRecipe(){
+  //   const dialogRef = this.dialog.open(AddRecipeComponent, {
+  //     width: '75%',
+  //     height: '75%',
+  //     data: {
 
-      }
-    });
+  //     }
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
+  //   dialogRef.afterClosed().subscribe(result => {
 
-    });
-  }
+  //   });
+  // }
 
   // public Upload(event){
   //   this.recipeService.UploadImage(event).then(

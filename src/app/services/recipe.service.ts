@@ -41,6 +41,8 @@ export class RecipeService {
     newRecipe.image = recipe.Image;
     newRecipe.ingredients = new Array<Ingredient>();
     newRecipe.ingredients = recipe.ingredients;
+    newRecipe.rating = recipe.Rating;
+    newRecipe.haveCooked = recipe.HaveCooked;
     return newRecipe;
   }
 
@@ -84,6 +86,7 @@ export class RecipeService {
   }
 
   // Documentation Code on how to call for certain things
+  //
   private fireStoreGetBasedOnDocumentId() {
     let test = this.afs.doc(`recipes/hI7FPCz11wifuWKaDk8l`);
     let test2 = test.valueChanges();

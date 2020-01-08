@@ -1,9 +1,9 @@
-import { USStates } from './../Models/USStates';
-import { AccountService } from './../services/account.service';
+import { USStates } from '../../Models/USStates';
+import { AccountService } from '../../services/account.service';
 import { FormGroup } from '@angular/forms';
-import { AuthService } from './../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { Address } from '../Models/Address';
+import { Address } from '../../Models/Address';
 
 @Component({
   selector: 'app-account',

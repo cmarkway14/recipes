@@ -25,6 +25,7 @@
 
 #add-recipe-container{
     overflow: visible;
+    padding: 1em;
 }
 
 #submit-recipe-button{

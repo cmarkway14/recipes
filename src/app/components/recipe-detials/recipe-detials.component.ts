@@ -1,4 +1,4 @@
-import { Ingredient } from './../../Models/Ingredient';
+import { Ingredient } from '../../Models/Ingredient';
 import { Recipe } from 'src/app/Models/Recipe';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatStepper } from '@angular/material';
