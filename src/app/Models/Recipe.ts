@@ -7,6 +7,8 @@ export class Recipe{
     ingredients: Array<Ingredient>;
     image: string;
     servings: number;
+    haveCooked: boolean;
+    rating: number;
     metaData: Array<string>;
 
     constructor() {

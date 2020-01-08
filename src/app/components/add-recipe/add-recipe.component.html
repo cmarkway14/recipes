@@ -1,7 +1,5 @@
-<div mat-dialog-content id="add-recipe-container">
+<div id="add-recipe-container">
     <form #recipeForm='ngForm' (ngSubmit)="onSubmit($event)">
-
-        {{recipeForm.form.valid}}
         <div id="submit-button-container">
             <button [disabled]="recipeForm.form.invalid" type="submit" id="submit-recipe-button" mat-raised-button
                 color="primary">Submit</button>
@@ -13,8 +11,13 @@
                     Recipe Name
                 </mat-expansion-panel-header>
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Recipe Name" [(ngModel)]="recipe.name" name="RecipeName">
+                    <input matInput placeholder="Recipe Name" [(ngModel)]="recipe.name" name="RecipeName" required>
                 </mat-form-field>
+                <div>
+                    <h3>Upload an image of the dish.</h3>
+                    <input type="file" (change)="Upload($event)" accept=".png,.jpg"  required/>
+                    <img *ngIf="imgUrl !==  undefined" [src]="imgUrl">
+                </div>
             </mat-expansion-panel>
 
             <mat-expansion-panel>

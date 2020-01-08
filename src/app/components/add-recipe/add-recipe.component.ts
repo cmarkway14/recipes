@@ -1,4 +1,4 @@
-import { Measurements } from './../../Models/Measurements';
+import { Measurements } from '../../Models/Measurements';
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/Models/Recipe';
 import { Ingredient } from 'src/app/Models/Ingredient';
@@ -13,6 +13,7 @@ import { FormGroup } from '@angular/forms';
 export class AddRecipeComponent implements OnInit {
 
   recipeNameForm: FormGroup;
+  recipeImage: string;
 
   directionsArr: number[];
   directionsCounter: number = 1;
@@ -20,6 +21,7 @@ export class AddRecipeComponent implements OnInit {
   ingredientArr: number[];
   measurements: string[];
   recipe: Recipe;
+  imgUrl: any;
 
   constructor(private recipeService: RecipeService) {
     this.measurements = new Measurements().getMeasurements();
@@ -31,9 +33,7 @@ export class AddRecipeComponent implements OnInit {
   ngOnInit() {
     //this is a hack need to find a better way to do this
     this.directionsArr = [1];
-    this.ingredientArr = [0];
-
-    
+    this.ingredientArr = [0];    
   }
 
   public AddDirectionStep() : void {
@@ -41,10 +41,11 @@ export class AddRecipeComponent implements OnInit {
     this.directionsArr.push(this.directionsCounter);
   }
 
-  public RemoveDirectionStep() : void{
+  public RemoveDirectionStep() : void {
     this.directionsCounter--;
     this.directionsArr.pop();
   }
+
   public AddIngredient() : void {
     this.ingredCounter++;
     this.ingredientArr.push(this.ingredCounter);
@@ -56,12 +57,25 @@ export class AddRecipeComponent implements OnInit {
     this.recipe.ingredients.splice(index, 1);
   }
 
-  public onSubmit(event: Event) {
+  public onSubmit(event: Event) : void {
     event.preventDefault();
-    this.recipe.ingredients.forEach(x => {
-      x.amount += ' ';
-      x.amount += x.measurement;
-    });
-    this.recipeService.AddRecipe(this.recipe);
+
+    this.recipeService.AddRecipe(this.recipe);    
   }
+  
+  public Upload(event) : void {
+
+    if (event.target.files && event.target.files[0]) {
+      this.recipeService.UploadImage(event);
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event2) => { // called once readAsDataURL is completed
+        this.imgUrl = (<FileReader>event2.target).result;
+      }
+    }
+
+  }
+
 }

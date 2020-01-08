@@ -1,7 +1,16 @@
+<div id='header-container'>
+  <h3 id="recipe-header">Recipe Book</h3>
+</div>
 <div id="recipe-wrapper">
   <!-- <div>
     <button (click)="AddRecipe()">Add</button>
   </div> -->
+  <!-- <div>
+    <h5>Select a file for upload:</h5>
+    <input type="file" (change)="Upload($event)" accept=".png,.jpg" />
+  </div> -->
+
+  <br>
   <div class="recipe-container">
     <div *ngFor="let recipe of recipes" class="recipe">
       <mat-card class="recipe-card">
@@ -16,7 +25,7 @@
         </mat-card-content>
 
         <mat-card-actions align="center">
-          <button mat-button class="recipe-details">Details</button>
+          <button mat-button class="recipe-details" (click)="OpenDetials(recipe);">Details</button>
           <!-- <span class="spacer"></span>
           <button mat-button>Select Workout</button> -->
         </mat-card-actions>
