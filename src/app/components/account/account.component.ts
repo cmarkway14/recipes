@@ -1,3 +1,5 @@
+import { User } from './../../Models/User';
+import { Weight } from './../../Models/Weight';
 import { USStates } from '../../Models/USStates';
 import { AccountService } from '../../services/account.service';
 import { FormGroup } from '@angular/forms';
@@ -22,6 +24,7 @@ export class AccountComponent implements OnInit {
   states: Array<string> = [];
   zip: number;
   city: string;
+  weight: Weight[];
 
 
   constructor(public auth: AuthService, private accountService: AccountService) { 
@@ -34,12 +37,14 @@ export class AccountComponent implements OnInit {
         this.firstName = this.capFirstLetter(displayNameArr[0]);
         this.lastName = this.capFirstLetter(displayNameArr[1]);
       }      
-
+      
       this.address1 = user.address.addressLine1;
       this.address2 = user.address.addressLine2;
       this.selectedState = user.address.state;
       this.zip = user.address.zip;
       this.city = user.address.city;
+      this.weight = new Array<Weight>();
+      this.weight = user.weight;
       
     });
   }
@@ -61,6 +66,7 @@ export class AccountComponent implements OnInit {
       user.address.addressLine1 = this.address1;
       user.address.addressLine2 = this.address2;
       user.address.city = this.city;
+      user.weight = this.weight;
 
       this.accountService.updateUserInformation(user);
     });
