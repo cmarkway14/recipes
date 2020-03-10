@@ -1,11 +1,9 @@
-import { User } from './../../Models/User';
 import { Weight } from './../../Models/Weight';
 import { USStates } from '../../Models/USStates';
 import { AccountService } from '../../services/account.service';
 import { FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { Address } from '../../Models/Address';
 
 @Component({
   selector: 'app-account',
@@ -37,7 +35,7 @@ export class AccountComponent implements OnInit {
         this.firstName = this.capFirstLetter(displayNameArr[0]);
         this.lastName = this.capFirstLetter(displayNameArr[1]);
       }      
-      
+
       this.address1 = user.address.addressLine1;
       this.address2 = user.address.addressLine2;
       this.selectedState = user.address.state;

@@ -1,5 +1,3 @@
-import { Weight } from './../Models/Weight';
-import { Address } from './../Models/Address';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';

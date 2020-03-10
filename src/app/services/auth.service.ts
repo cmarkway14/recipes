@@ -1,4 +1,3 @@
-import { Weight } from './../Models/Weight';
 import { Injectable } from '@angular/core';
 import { Router } from "@angular/router";
 import { auth } from 'firebase/app';
