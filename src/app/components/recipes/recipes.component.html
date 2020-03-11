@@ -1,35 +1,21 @@
-<div id='header-container'>
-  <h3 id="recipe-header">Recipe Book</h3>
-</div>
-<div id="recipe-wrapper">
-  <!-- <div>
-    <button (click)="AddRecipe()">Add</button>
-  </div> -->
-  <!-- <div>
-    <h5>Select a file for upload:</h5>
-    <input type="file" (change)="Upload($event)" accept=".png,.jpg" />
-  </div> -->
+<button (click)="AddRecipe()">Add</button>
 
-  <br>
-  <div class="recipe-container">
-    <div *ngFor="let recipe of recipes" class="recipe">
-      <mat-card class="recipe-card">
-        <mat-card-header>
-          <img mat-card-avatar class="header-image" src="{{recipe.image}}" alt="Photo of a Shiba Inu">
-          {{recipe.name}}
-        </mat-card-header>
+<div class="recipe-grid">
+  <div *ngFor="let recipe of recipes" class="recipe">
+    <mat-card>
+      <mat-card-header>
+        <img mat-card-avatar src="{{recipe.image}}" alt="Photo of a Shiba Inu">
+        {{recipe.name}}
+      </mat-card-header>
 
-        <mat-card-content>
-          <p>Cook time (In minutes): {{recipe.cookTime}}</p>
-          <br>
-        </mat-card-content>
+      <mat-card-content>
+        <p>Cook time (In minutes): {{recipe.cookTime}}</p>
+        <br>
+      </mat-card-content>
 
-        <mat-card-actions align="center">
-          <button mat-button class="recipe-details" (click)="OpenDetials(recipe);">Details</button>
-          <!-- <span class="spacer"></span>
-          <button mat-button>Select Workout</button> -->
-        </mat-card-actions>
-      </mat-card>
-    </div>
+      <mat-card-actions align="center">
+        <button mat-button (click)="OpenDetials(recipe);">Details</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 </div>

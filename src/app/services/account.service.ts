@@ -1,4 +1,3 @@
-import { Address } from './../Models/Address';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -20,7 +19,8 @@ export class AccountService {
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      address: Object.assign({}, user.address),
+      address: Object.assign({}, user.address),     
+      weight: Object.assign({}, user.weight),
     }
 
     return userRef.set(data, {merge: true});

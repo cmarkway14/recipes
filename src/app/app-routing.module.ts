@@ -13,10 +13,10 @@ const routes: Routes = [
   { path: 'home', pathMatch: 'full', component: AppComponent },
   { path: 'Account', pathMatch: 'full', component: AccountComponent, canActivate: [AuthGuard] },
   { path: 'account', pathMatch: 'full', component: AccountComponent, canActivate: [AuthGuard] },
-  { path: 'a1', pathMatch: 'full', component:AccountComponent },
+  { path: 'a1', pathMatch: 'full', component: AccountComponent },
   { path: 'Add', pathMatch: 'full', component: AddRecipeComponent },
-  { path: 'Ops', loadChildren: () => import('./admin_module/admin.module').then(m => m.AdminModule)},
-  { path: 'sps', loadChildren: () => import('./admin_module/admin.module').then(m => m.AdminModule)},
+  { path: 'Ops', loadChildren: () => import('./admin_module/admin.module').then(m => m.AdminModule) },
+  { path: 'ops', loadChildren: () => import('./admin_module/admin.module').then(m => m.AdminModule) },
   { path: '', pathMatch: 'full', component: RecipesComponent }
   // { path: '', pathMatch: 'full', component: AppComponent},
 ];
