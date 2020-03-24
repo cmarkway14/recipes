@@ -1,8 +1,7 @@
 <button (click)="AddRecipe()">Add</button>
-
 <div class="recipe-grid">
   <div *ngFor="let recipe of recipes" class="recipe">
-    <mat-card>
+    <mat-card class="card">
       <mat-card-header>
         <img mat-card-avatar src="{{recipe.image}}" alt="Photo of a Shiba Inu">
         {{recipe.name}}

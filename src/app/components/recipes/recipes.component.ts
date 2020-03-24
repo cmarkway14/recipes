@@ -1,3 +1,4 @@
+import { AddRecipeComponent } from './../add-recipe/add-recipe.component';
 import { RecipeDetialsComponent } from '../recipe-detials/recipe-detials.component';
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/Models/Recipe';
@@ -25,25 +26,30 @@ export class RecipesComponent implements OnInit {
     });
   }
 
-  // public AddRecipe(){
-  //   const dialogRef = this.dialog.open(AddRecipeComponent, {
-  //     width: '75%',
-  //     height: '75%',
-  //     data: {
+  public AddRecipe(){
+    const dialogRef = this.dialog.open(AddRecipeComponent, {
+      width: '75%',
+      height: '75%',
+      data: {
 
-  //     }
-  //   });
+      }
+    });
 
-  //   dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {
+      this.recipeService.GetAllRecipes().subscribe(recipes => {
+        recipes.forEach(recipe => {
+          this.recipes = [];
+          this.recipes.push(this.recipeService.mapRecipe(recipe));
+        })
+      })
+    });
+  }
 
-  //   });
-  // }
-
-  // public Upload(event){
-  //   this.recipeService.UploadImage(event).then(
+  public Upload(event){
+    this.recipeService.UploadImage(event).then(
       
-  //   );
-  // }
+    );
+  }
 
   public OpenDetials(recipe: Recipe) : void {
     const dialogRef = this.dialog.open(RecipeDetialsComponent, {
