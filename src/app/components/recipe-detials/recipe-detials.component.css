@@ -31,4 +31,19 @@
     margin-left: 1.2em;
 }
 
+.stepper-button{
+    width: 100%;
+    padding-top: 35px;
+    text-align: center;
+}
 
+.stepper-style{
+    font-size: large;
+    width: 145px;
+    height: 45px;
+    margin: 5px;
+}
+
+.direction-style{
+    font-size: large;
+}

@@ -28,8 +28,8 @@ export class RecipesComponent implements OnInit {
 
   public AddRecipe(){
     const dialogRef = this.dialog.open(AddRecipeComponent, {
-      width: '75%',
-      height: '75%',
+      width: '100%',
+      height: '100%',
       data: {
 
       }
