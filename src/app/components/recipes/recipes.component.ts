@@ -30,6 +30,7 @@ export class RecipesComponent implements OnInit {
     const dialogRef = this.dialog.open(AddRecipeComponent, {
       width: '100%',
       height: '100%',
+      
       data: {
 
       }
