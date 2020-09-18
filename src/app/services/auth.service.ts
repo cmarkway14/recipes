@@ -18,8 +18,11 @@ export class AuthService {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
+          console.log('here1');
+
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
+          console.log('here');
           return of(null);
         }
       })
@@ -35,6 +38,7 @@ export class AuthService {
   public async signOut() {
     await this.afAuth.auth.signOut();
     this.loggedIn$ = false;
+    
     return this.router.navigate(['/']);
   }
 

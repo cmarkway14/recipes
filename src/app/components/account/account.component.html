@@ -5,7 +5,7 @@
             <mat-icon [inline]='true'>edit</mat-icon>
         </button>
 
-        <form #recipeForm='ngForm' (ngSubmit)="saveInformation($event)">
+        <form #recipeForm='ngForm' (ngSubmit)="saveInformation()">
 
             <button *ngIf="edit" mat-button id="save-information" (click)="saveInformation()">
                 <mat-icon [inline]='true'>save_alt</mat-icon>
