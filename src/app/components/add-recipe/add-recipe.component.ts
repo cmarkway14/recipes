@@ -60,6 +60,8 @@ export class AddRecipeComponent implements OnInit {
   public onSubmit(event: Event) : void {
     event.preventDefault();
 
+    console.log('this recipe: ',this.recipe)
+
     this.recipeService.AddRecipe(this.recipe);    
   }
   

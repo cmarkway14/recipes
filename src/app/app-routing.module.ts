@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'Account', pathMatch: 'full', component: AccountComponent, canActivate: [AuthGuard] },
   { path: 'account', pathMatch: 'full', component: AccountComponent, canActivate: [AuthGuard] },
   { path: 'a1', pathMatch: 'full', component: AccountComponent },
-  { path: 'Add', pathMatch: 'full', component: AddRecipeComponent },
+  { path: 'Add', pathMatch: 'full', component: AddRecipeComponent, canActivate: [AuthGuard] },
   { path: 'Ops', loadChildren: () => import('./admin_module/admin.module').then(m => m.AdminModule) },
   { path: 'ops', loadChildren: () => import('./admin_module/admin.module').then(m => m.AdminModule) },
   { path: '', pathMatch: 'full', component: RecipesComponent }
