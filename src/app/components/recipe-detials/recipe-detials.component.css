@@ -31,4 +31,23 @@
     margin-left: 1.2em;
 }
 
+.stepper{
+    /* position: fixed;
+    display: flex;
+    max-height: inherit;
+    min-height: inherit;
+    bottom: 15%;
+    left: 50% */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 55%;
+}
+
+.stepper-button {
+    width: 75px;
+    height: 35px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
 

@@ -33,10 +33,14 @@
     </mat-step>
     <div *ngFor="let direction of recipe.directions; let i = index">
         <mat-step>
-            <ng-template matStepLabel>Step {{i+1}}</ng-template>
-            {{direction}}
-            <button *ngIf='stepper._selectedIndex !== recipe.directions.length' (click)='Next(stepper)'>Next</button>
-            <button *ngIf='direction !== recipe.directions[0] -1' (click)='Pervious(stepper)'>Pervious</button>
+            <div>
+                <ng-template matStepLabel>Step {{i+1}}</ng-template>
+                {{direction}}
+            </div>
+            <div class="stepper">
+                <button class="stepper-button" *ngIf='direction !== recipe.directions[0] -1' (click)='Pervious(stepper)'>Pervious</button>
+                <button class="stepper-button" *ngIf='stepper._selectedIndex !== recipe.directions.length' (click)='Next(stepper)'>Next</button>
+            </div>
         </mat-step>
     </div>
 </mat-horizontal-stepper>
